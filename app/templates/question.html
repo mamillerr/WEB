@@ -100,12 +100,16 @@
     </div>
     <!-- Answer input -->
     <div class="container border-top border-2 p-3 px-0">
+        <!-- Block for error -->
+        <div class="d-flex justify-content-start align-items-center">
+            <p class="text-danger">Error! Wrong answer format!</p>
+        </div>
         <textarea class="form-control text-secondary border-2" rows="4" placeholder="Enter your answer here."></textarea>
     </div>
     <!-- End of answer input -->
     <!-- Input for answer button -->
     <div class="container px-0">
-        <button type="button" class="btn btn-outline-success px-5">Answer</button>
+        <button type="button" class="btn btn-outline-success px-5 my-1">Answer</button>
     </div>
 </div>
 {% endblock content %}
