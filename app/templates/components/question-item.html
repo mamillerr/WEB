@@ -6,7 +6,7 @@
     <!-- Column for question -->
     <div class="col-10">
         <div class="d-flex flex-column justify-content-start align-items-start">
-            <a class="link-offset-2 fs-3" href="#">{{question.title}}</a>
+            <a class="link-offset-2 fs-3" href="{% url 'question' question.id %}">{{question.title}}</a>
             <p class="fs-5 text-secondary text-break">
                 {{question.description}}
             </p>
@@ -22,7 +22,7 @@
     <!-- Column for tags and answers -->
     <div class="col-10">
        <div class="d-flex justify-content-start align-items-center">
-            <a class="link-offset-2 fs-5" href="#">answer({{question.answers_num}})</a>
+            <a class="link-offset-2 fs-5" href="{% url 'question' question.id %}">answer({{question.answers_num}})</a>
             <div class="mx-5">
                 <span class="fs-5 text-secondary">Tags: </span>
                 {% for tag in question.tags %}
