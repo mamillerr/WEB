@@ -76,7 +76,7 @@ def question(request, question_id):
     question = QUESTIONS[question_id]
     answers = [answer for answer in ANSWERS if answer.get('question_id') == question_id]
 
-    return render(request, 'question.html', {'question': question, 'answers': answers})
+    return render(request, 'question.html', {'question': question, 'answers': paginate(request, answers)})
 
 
 def tag(request):
