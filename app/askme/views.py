@@ -37,8 +37,9 @@ def settings(request):
     return render(request, 'settings.html')
 
 
-def question(request):
-    return render(request, 'question.html')
+def question(request, question_id):
+    question = QUESTIONS[question_id]
+    return render(request, 'question.html', {'question': question})
 
 
 def tag(request):

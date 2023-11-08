@@ -10,39 +10,7 @@
 <div class="col-9">
     <!-- Full question template -->
     <div class="container p-3 border-bottom border-2">
-        <div class="row align-items-start">
-            <!-- Column for avatar -->
-            <div class="col-2 my-3">
-                <img src="https://klike.net/uploads/posts/2023-01/1674365337_3-31.jpg" class="rounded-3" style="width: 100px;" alt="Avatar" />
-            </div>
-            <!-- Column for question and text -->
-            <div class="col-10">
-                <div class="d-flex flex-column justify-content-start align-items-start my-1">
-                    <p class="text-secondary fs-3" href="#">How to build a moon park?</p>
-                    <p class="fs-5 text-secondary">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit.<br>
-                        Neque quo omnis modi consequuntur numquam, magnam dolore non<br>
-                        explicabo, doloremque, esse suscipit! Eum quisquam dicta aut,<br>
-                        deserunt saepe molestias facilis nulla?<br>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <!-- New line -->
-        <div class="row align-items-center">
-            <!-- Column for likes -->
-            <div class="col-2">
-                <input value="0" min="0" type="number" id="typeNumber" class="form-control counter"/>
-            </div>
-            <!-- Column for tags -->
-            <div class="col-10">
-                <div class="d-flex justify-content-start align-items-center">
-                    <span class="fs-5 text-secondary">Tags: </span>
-                    <a class="link-offset-2 fs-5" href="#">black-jack</a>
-                    <a class="link-offset-2 fs-5 mx-3" href="#">bender</a>
-                </div>
-            </div>
-        </div>
+        {% include 'components/question-item.html' %}
     </div>
     <!-- End of question template -->
     <!-- Answer template -->
