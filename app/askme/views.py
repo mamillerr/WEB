@@ -17,6 +17,27 @@ QUESTIONS = [
     } for i in range(10)
 ]
 
+check_list = ['checked', '']
+
+ANSWERS = []
+
+for question in QUESTIONS:
+
+    ans_num = question["answers_num"]
+    if ans_num == 0:
+        print("No answers")
+    else:
+        for i in range(ans_num):
+            answer = {
+                'id': i,
+                'question_id': question['id'],
+                'img': 'https://klike.net/uploads/posts/2023-01/1674365337_3-31.jpg',
+                'answer': ' '.join([r.get_random_word() for _ in range(random.randint(10, 15))]),
+                'likes_num': random.randint(0, 100),
+                'correct': check_list[random.randint(0, 1)],
+            }
+            ANSWERS.append(answer)
+
 
 def paginate(request, obj_list, num_per_page=5):
     paginator = Paginator(obj_list, num_per_page)
@@ -53,7 +74,9 @@ def settings(request):
 
 def question(request, question_id):
     question = QUESTIONS[question_id]
-    return render(request, 'question.html', {'question': question})
+    answers = [answer for answer in ANSWERS if answer.get('question_id') == question_id]
+
+    return render(request, 'question.html', {'question': question, 'answers': answers})
 
 
 def tag(request):

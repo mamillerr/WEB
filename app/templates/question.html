@@ -20,7 +20,7 @@
             <!-- Column for tags and answers -->
             <div class="col-10">
                <div class="d-flex justify-content-start align-items-center">
-                    <div class="mx-5">
+                    <div>
                         <span class="fs-5 text-secondary">Tags: </span>
                         {% for tag in question.tags %}
                             <a class="link-offset-2 fs-5 mx-1" href="#">{{tag}}</a>
@@ -32,40 +32,9 @@
     </div>
     <!-- End of question template -->
     <!-- Answer template -->
-    <div class="container border border-2 rounded-3 p-3 my-3">
-        <div class="row align-items-center my-2">
-            <!-- Column for avatar -->
-            <div class="col-2">
-                <img src="https://klike.net/uploads/posts/2023-01/1674365337_3-31.jpg" class="rounded-3" style="width: 100px;" alt="Avatar" />
-            </div>
-            <!-- Column for answer -->
-            <div class="col-10">
-                <div class="d-flex flex-column justify-content-start align-items-start">
-                    <p class="text-secondary fs-5 text-break">
-                        First of all i would like to thank you for the invitation to participate in such a Russia is the huge territory which in many respects needs to be render habilable.
-                    </p>
-                </div>
-            </div>
-        </div>
-        <!-- New line -->
-        <div class="row align-items-center">
-            <!-- Column for likes -->
-            <div class="col-2">
-                <input value="0" min="0" type="number" id="typeNumber" class="form-control counter"/>
-            </div>
-            <!-- Column for check if the answer correct or not -->
-            <div class="col-10">
-                <div class="d-flex justify-content-start align-items-center">
-                      <div class="form-check mx-1">
-                        <input class="form-check-input fs-5 text-secondary" type="checkbox" value="" id="flexCheckChecked">
-                        <label class="form-check-label fs-5 text-secondary" for="flexCheckChecked">
-                            Correct!
-                        </label>
-                      </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% for answer in answers %}
+        {% include 'components/answer-item.html' %}
+    {% endfor %}
     <!-- End of answer template -->
     <div class="row align-items-center">
         <!-- Pagination for iterating all answers -->
