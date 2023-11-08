@@ -18,27 +18,29 @@
         <h2 class="text-secondary">Tag: {{tag}}</h2>
     </div>
     <!-- Question template -->
+    <div class="container border border-2 rounded-3 p-3 my-3">
         {% for question in questions %}
         {%include 'components/question-item.html' %}
         <!-- New line -->
         <div class="row align-items-center">
-            <!-- Column for likes -->
-            <div class="col-2">
-                <input value="0" min="0" type="number" id="typeNumber" class="form-control counter"/>
-            </div>
-            <!-- Column for answers and tags -->
-            <div class="col-10">
-               <div class="d-flex justify-content-start align-items-center">
-                    <a class="link-offset-2 fs-5" href="#">answer(3)</a>
-                    <div class="mx-5">
-                        <span class="fs-5 text-secondary">Tags: </span>
-                        <a class="link-offset-2 fs-5" href="#">black-jack</a>
-                        <a class="link-offset-2 fs-5 mx-3" href="#">bender</a>
-                    </div>
-               </div>
+        <!-- Column for likes -->
+        <div class="col-2">
+            <input value="{{question.likes_num}}" min="0" type="number" id="typeNumber" class="form-control counter" />
+        </div>
+        <!-- Column for tags and answers -->
+        <div class="col-10">
+            <div class="d-flex justify-content-start align-items-center">
+                <a class="link-offset-2 fs-5" href="{% url 'question' question.id %}">answer({{question.answers_num}})</a>
+                <div class="mx-5">
+                    <span class="fs-5 text-secondary">Tags: </span>
+                    {% for tag in question.tags %}
+                        <a class="link-offset-2 fs-5 mx-1" href="{% url 'tag' tag %}">{{tag}}</a>
+                    {% endfor %}
+                </div>
             </div>
         </div>
-        {% endfor %}
+      </div>
+        {%endfor%}
     </div>
     <!-- End of question template -->
     <!-- Pagination -->

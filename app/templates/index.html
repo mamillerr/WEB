@@ -14,10 +14,18 @@
 {% block content %}
 <div class="col-9 my-4">
     <!-- Title of the page and link to the hot questions-->
-    <div class="d-flex justify-content-start align-items-center">
-        <h2 class="text-secondary">New Questions</h2>
-        <a class="link-offset-2 fs-5 mx-3" href="#">Hot Questions</a>
-    </div>
+    {% if request.get_full_path == "/" %}
+      <div class="d-flex justify-content-start align-items-center">
+          <h2 class="text-secondary">New Questions</h2>
+          <a class="link-offset-2 fs-5 mx-3" href="{% url 'hot' %}">Hot Questions</a>
+      </div>
+    {% else %}
+      <div class="d-flex justify-content-start align-items-center">
+        <h2 class="text-secondary">Hot questions</h2>
+        <a class="link-offset-2 fs-5 mx-3" href="{% url 'index' %}">New questions</a>
+      </div>
+    {% endif %}
+
     <!-- Question template -->
     {% for question in questions %}
 

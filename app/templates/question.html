@@ -19,14 +19,14 @@
             </div>
             <!-- Column for tags and answers -->
             <div class="col-10">
-               <div class="d-flex justify-content-start align-items-center">
+                <div class="d-flex justify-content-start align-items-center">
                     <div>
                         <span class="fs-5 text-secondary">Tags: </span>
                         {% for tag in question.tags %}
-                            <a class="link-offset-2 fs-5 mx-1" href="#">{{tag}}</a>
+                            <a class="link-offset-2 fs-5 mx-1" href="{% url 'tag' tag %}">{{tag}}</a>
                         {% endfor %}
                     </div>
-               </div>
+                </div>
             </div>
         </div>
     </div>
@@ -86,3 +86,4 @@
     </div>
 </div>
 {% endblock content %}
+

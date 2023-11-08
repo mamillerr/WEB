@@ -83,3 +83,9 @@ def tag(request, slug):
     questions = [question for question in QUESTIONS if slug in question.get('tags')]
     return render(request, 'tag.html', {'tag': slug, 'questions': paginate(request, questions)})
 
+
+def hot(request):
+    questions = [question for question in QUESTIONS if question.get('likes_num') > 40]
+    return render(request, 'index.html', {'questions': paginate(request, questions)})
+
+
