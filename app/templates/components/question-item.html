@@ -1,0 +1,37 @@
+<div class="container border border-2 rounded-3 p-3 my-3">
+    <div class="row align-items-center">
+        <!-- Column for avatar -->
+        <div class="col-2 my-1">
+            <img src="{{question.img}}" class="rounded-3" style="width: 100px;" alt="Avatar" />
+        </div>
+        <!-- Column for question -->
+        <div class="col-10">
+            <div class="d-flex flex-column justify-content-start align-items-start">
+                <a class="link-offset-2 fs-3" href="#">{{question.title}}</a>
+                <p class="fs-5 text-secondary text-break">
+                    {{question.description}}
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- New line -->
+    <div class="row align-items-center">
+        <!-- Column for likes -->
+        <div class="col-2">
+            <input value="{{question.likes_num}}" min="0" type="number" id="typeNumber" class="form-control counter" />
+        </div>
+        <!-- Column for tags and answers -->
+        <div class="col-10">
+           <div class="d-flex justify-content-start align-items-center">
+                <a class="link-offset-2 fs-5" href="#">answer({{question.answers_num}})</a>
+                <div class="mx-5">
+                    <span class="fs-5 text-secondary">Tags: </span>
+                    {% for tag in question.tags %}
+                        <a class="link-offset-2 fs-5 mx-1" href="#">{{tag}}</a>
+                    {% endfor %}
+                </div>
+           </div>
+        </div>
+    </div>
+</div>
+<!-- End of question template -->

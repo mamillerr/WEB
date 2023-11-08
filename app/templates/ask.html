@@ -2,8 +2,8 @@
 
 <!-- block for unauthorized user -->
 {% block user_status %}
-<a class="link-offset-2 fs-5" href="#">log in</a>
-<a class="link-offset-2 fs-5 mx-3" href="#">register</a>
+<a class="link-offset-2 fs-5" href="{% url 'login' %}">log in</a>
+<a class="link-offset-2 fs-5 mx-3" href="{% url 'signup' %}">register</a>
 {% endblock user_status %}
 
 {% block content %}
