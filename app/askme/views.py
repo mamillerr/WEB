@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
 from random_word import RandomWords
 import random
 
@@ -17,8 +18,21 @@ QUESTIONS = [
 ]
 
 
+def paginate(request, obj_list, num_per_page=5):
+    paginator = Paginator(obj_list, num_per_page)
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+    try:
+        objects = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        objects = paginator.page(paginator.num_pages)
+    return objects
+
+
 def index(request):
-    return render(request, 'index.html', {'questions': QUESTIONS})
+    return render(request, 'index.html', {'questions': paginate(request, QUESTIONS)})
 
 
 def login(request):
