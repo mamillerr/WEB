@@ -79,5 +79,7 @@ def question(request, question_id):
     return render(request, 'question.html', {'question': question, 'answers': paginate(request, answers)})
 
 
-def tag(request):
-    return render(request, 'tag.html')
+def tag(request, slug):
+    questions = [question for question in QUESTIONS if slug in question.get('tags')]
+    return render(request, 'tag.html', {'tag': slug, 'questions': paginate(request, questions)})
+

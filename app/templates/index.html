@@ -36,7 +36,7 @@
                     <div class="mx-5">
                         <span class="fs-5 text-secondary">Tags: </span>
                         {% for tag in question.tags %}
-                            <a class="link-offset-2 fs-5 mx-1" href="#">{{tag}}</a>
+                            <a class="link-offset-2 fs-5 mx-1" href="{% url 'tag' tag %}">{{tag}}</a>
                         {% endfor %}
                     </div>
                </div>

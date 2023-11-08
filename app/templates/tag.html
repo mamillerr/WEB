@@ -15,27 +15,11 @@
 <div class="col-9 my-4">
     <!-- Title of the page-->
     <div class="d-flex justify-content-start align-items-center">
-        <h2 class="text-secondary">Tag: </h2>
-        <h2 class="text-secondary mx-3">Bender</h2>
+        <h2 class="text-secondary">Tag: {{tag}}</h2>
     </div>
     <!-- Question template -->
-    <div class="container border border-2 rounded-3 p-3 my-3">
-        <div class="row align-items-center">
-            <!-- Column for avatar -->
-            <div class="col-2">
-                <img src="https://klike.net/uploads/posts/2023-01/1674365337_3-31.jpg" class="rounded-3" style="width: 100px;" alt="Avatar" />
-            </div>
-            <!-- Column for question title and short description -->
-            <div class="col-10">
-                <div class="d-flex flex-column justify-content-start align-items-start">
-                    <a class="link-offset-2 fs-3" href="#">How to build a moon park?</a>
-                    <p class="fs-5 text-secondary">
-                        Guys, i have trouble with a moon park.<br>
-                        Can't find th black-jack...
-                    </p>
-                </div>
-            </div>
-        </div>
+        {% for question in questions %}
+        {%include 'components/question-item.html' %}
         <!-- New line -->
         <div class="row align-items-center">
             <!-- Column for likes -->
@@ -54,6 +38,7 @@
                </div>
             </div>
         </div>
+        {% endfor %}
     </div>
     <!-- End of question template -->
     <!-- Pagination -->

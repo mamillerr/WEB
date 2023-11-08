@@ -8,6 +8,6 @@ urlpatterns = [
     path('settings/', views.settings, name='settings'),
     path('ask/', views.ask, name='ask'),
     path('question/<int:question_id>', views.question, name='question'),
-    path('tag/blablabla/', views.tag, name='tag'), #Нужно ли добавлять отдельный шаблон?
+    path('tag/<str:slug>/', views.tag, name='tag'),
     #path('hot/', views.hot, name='hot'), ???
 ]
