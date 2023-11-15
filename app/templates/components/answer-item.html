@@ -3,13 +3,13 @@
     <div class="row align-items-center my-2">
         <!-- Column for avatar -->
         <div class="col-2">
-            <img src="{{answer.img}}" class="rounded-3" style="width: 100px;" alt="Avatar" />
+            <img src="https://klike.net/uploads/posts/2023-01/1674365337_3-31.jpg" class="rounded-3" style="width: 100px;" alt="Avatar" />
         </div>
         <!-- Column for answer -->
         <div class="col-10">
             <div class="d-flex flex-column justify-content-start align-items-start">
                 <p class="text-secondary fs-5 text-break">
-                    {{answer.answer}}
+                    {{answer.content}}
                 </p>
             </div>
         </div>
@@ -18,14 +18,14 @@
     <div class="row align-items-center">
         <!-- Column for likes -->
         <div class="col-2">
-            <input value="{{answer.likes_num}}" min="0" type="number" id="typeNumber" class="form-control counter"/>
+            <input value="{{ answer.get_likes_count }}" min="0" type="number" id="typeNumber" class="form-control counter"/>
         </div>
         <!-- Column for check if the answer correct or not -->
         <div class="col-10">
             <div class="d-flex justify-content-start align-items-center">
                   <div class="form-check mx-1">
-                    <input class="form-check-input fs-5 text-secondary" type="checkbox" value="" id="flexCheckChecked" {{answer.correct}}>
-                    <label class="form-check-label fs-5 text-secondary" for="flexCheckChecked">
+                    <input class="form-check-input fs-5 text-secondary" type="checkbox" value="" id="flexCheckChecked{{answer.id}}" {{answer.is_correct}}>
+                    <label class="form-check-label fs-5 text-secondary" for="flexCheckChecked{{answer.id}}">
                         Correct!
                     </label>
                   </div>

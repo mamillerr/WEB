@@ -1,42 +1,7 @@
 from django.shortcuts import render
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
-from random_word import RandomWords
-import random
-
-r = RandomWords()
-
-QUESTIONS = [
-    {
-        'id': i,
-        'img': 'https://klike.net/uploads/posts/2023-01/1674365337_3-31.jpg',
-        'title': ' '.join([r.get_random_word() for _ in range(random.randint(2, 3))]) + '?',
-        'description': ' '.join([r.get_random_word() for _ in range(random.randint(10, 15))]) + '...',
-        'likes_num': random.randint(0, 100),
-        'answers_num': random.randint(0, 5),
-        'tags': [r.get_random_word() for _ in range(2)],
-    } for i in range(10)
-]
-
-check_list = ['checked', '']
-
-ANSWERS = []
-
-for question in QUESTIONS:
-
-    ans_num = question["answers_num"]
-    if ans_num == 0:
-        print("No answers")
-    else:
-        for i in range(ans_num):
-            answer = {
-                'id': i,
-                'question_id': question['id'],
-                'img': 'https://klike.net/uploads/posts/2023-01/1674365337_3-31.jpg',
-                'answer': ' '.join([r.get_random_word() for _ in range(random.randint(10, 15))]),
-                'likes_num': random.randint(0, 100),
-                'correct': check_list[random.randint(0, 1)],
-            }
-            ANSWERS.append(answer)
+from django.http import Http404
+from django.core.paginator import Paginator, EmptyPage, InvalidPage
+from askme.models import Question, Answer
 
 
 def paginate(request, obj_list, num_per_page=5):
@@ -53,7 +18,8 @@ def paginate(request, obj_list, num_per_page=5):
 
 
 def index(request):
-    return render(request, 'index.html', {'questions': paginate(request, QUESTIONS)})
+    questions = Question.objects.sorted_by_created_at()
+    return render(request, 'index.html', {'questions': paginate(request, questions)})
 
 
 def login(request):
@@ -73,19 +39,22 @@ def settings(request):
 
 
 def question(request, question_id):
-    question = QUESTIONS[question_id]
-    answers = [answer for answer in ANSWERS if answer.get('question_id') == question_id]
+    try:
+        question = Question.objects.get(pk=question_id)
+    except Question.DoesNotExist:
+        raise Http404("Question doesn't exist!")
+
+    answers = Answer.objects.get_answers_for_question(question_id)
 
     return render(request, 'question.html', {'question': question, 'answers': paginate(request, answers)})
 
 
 def tag(request, slug):
-    questions = [question for question in QUESTIONS if slug in question.get('tags')]
+    questions = Question.objects.filter_by_tag(slug)
     return render(request, 'tag.html', {'tag': slug, 'questions': paginate(request, questions)})
 
 
 def hot(request):
-    questions = [question for question in QUESTIONS if question.get('likes_num') > 40]
+    questions = Question.objects.get_hot_questions()
+
     return render(request, 'index.html', {'questions': paginate(request, questions)})
-
-

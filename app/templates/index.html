@@ -15,45 +15,43 @@
 <div class="col-9 my-4">
     <!-- Title of the page and link to the hot questions-->
     {% if "/hot/" in request.get_full_path %}
-        <div class="d-flex justify-content-start align-items-center">
-            <h2 class="text-secondary">Hot questions</h2>
-            <a class="link-offset-2 fs-5 mx-3" href="{% url 'index' %}">New questions</a>
-        </div>
+      <div class="d-flex justify-content-start align-items-center">
+        <h2 class="text-secondary">Hot questions</h2>
+        <a class="link-offset-2 fs-5 mx-3" href="{% url 'index' %}">New questions</a>
+      </div>
     {% else %}
-        <div class="d-flex justify-content-start align-items-center">
-          <h2 class="text-secondary">New Questions</h2>
-          <a class="link-offset-2 fs-5 mx-3" href="{% url 'hot' %}">Hot Questions</a>
-        </div>
+      <div class="d-flex justify-content-start align-items-center">
+        <h2 class="text-secondary">New Questions</h2>
+        <a class="link-offset-2 fs-5 mx-3" href="{% url 'hot' %}">Hot Questions</a>
+      </div>
     {% endif %}
-
     <!-- Question template -->
     {% for question in questions %}
 
     <div class="container border border-2 rounded-3 p-3 my-3">
       {% include 'components/question-item.html' %}
-        <!-- New line -->
-        <div class="row align-items-center">
-            <!-- Column for likes -->
-            <div class="col-2">
-                <input value="{{question.likes_num}}" min="0" type="number" id="typeNumber" class="form-control counter" />
-            </div>
-            <!-- Column for tags and answers -->
-            <div class="col-10">
-               <div class="d-flex justify-content-start align-items-center">
-                    <a class="link-offset-2 fs-5" href="{% url 'question' question.id %}">answer({{question.answers_num}})</a>
-                    <div class="mx-5">
-                        <span class="fs-5 text-secondary">Tags: </span>
-                        {% for tag in question.tags %}
-                            <a class="link-offset-2 fs-5 mx-1" href="{% url 'tag' tag %}">{{tag}}</a>
-                        {% endfor %}
-                    </div>
-               </div>
+      <!-- New line -->
+      <div class="row align-items-center">
+        <!-- Column for likes -->
+        <div class="col-2">
+            <input value="{{ question.get_likes_count }}" min="0" type="number" id="typeNumber" class="form-control counter" />
+        </div>
+        <!-- Column for tags and answers -->
+        <div class="col-10">
+            <div class="d-flex justify-content-start align-items-center">
+                <a class="link-offset-2 fs-5" href="{% url 'question' question.id %}">answer({{ question.get_answers_count }})</a> <!--{{question.answers_num}} -->
+                <div class="mx-5">
+                    <span class="fs-5 text-secondary">Tags: </span>
+                    {% for tag in question.tags.all %}
+                        <a class="link-offset-2 fs-5 mx-1" href="{% url 'tag' tag %}">{{tag}}</a>
+                    {% endfor %}
+                </div>
             </div>
         </div>
+      </div>
     </div>
 
     {% endfor %}
-    <!-- End of question template -->
     <!-- Pagination -->
     {% include "components/pagination-item.html" %}
     <!-- End of pagination -->

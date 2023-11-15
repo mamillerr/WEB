@@ -15,14 +15,14 @@
         <div class="row align-items-center">
             <!-- Column for likes -->
             <div class="col-2">
-                <input value="{{question.likes_num}}" min="0" type="number" id="typeNumber" class="form-control counter" />
+                <input value="{{ question.get_likes_count }}" min="0" type="number" id="typeNumber" class="form-control counter" />
             </div>
             <!-- Column for tags and answers -->
             <div class="col-10">
                 <div class="d-flex justify-content-start align-items-center">
                     <div>
                         <span class="fs-5 text-secondary">Tags: </span>
-                        {% for tag in question.tags %}
+                        {% for tag in question.tags.all %}
                             <a class="link-offset-2 fs-5 mx-1" href="{% url 'tag' tag %}">{{tag}}</a>
                         {% endfor %}
                     </div>
@@ -72,12 +72,12 @@
             </nav>
             <!-- End of pagination -->
         </div>
+        <!-- Answer input -->
     {% else %}
         <div class="row align-items-center">
             <p class="text-secondary h3">There are no answers yet. Be the first!</a>
         </div>
     {% endif %}
-    <!-- Answer input -->
     <div class="container border-top border-2 p-3 px-0">
         <!-- Block for error -->
         <div class="d-flex justify-content-start align-items-center">
@@ -92,4 +92,3 @@
     </div>
 </div>
 {% endblock content %}
-
