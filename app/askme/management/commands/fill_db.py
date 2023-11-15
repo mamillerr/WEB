@@ -27,10 +27,11 @@ class Command(BaseCommand):
         _fill_tags(ratio)
         _fill_questions(ratio * 10)
         _fill_answers(ratio * 100)
-        _fill_likes(ratio * 500)
+        _fill_likes(ratio * 200)
 
 
 def _fill_users(ratio):
+    print("Generating users...")
     for _ in range(ratio):
         person = Person(Locale.EN)
 
@@ -52,6 +53,7 @@ def _fill_users(ratio):
 
 
 def _fill_tags(ratio):
+    print("Generating tags...")
     for _ in range(ratio):
         txt = Text(Locale.EN)
         try:
@@ -62,6 +64,7 @@ def _fill_tags(ratio):
 
 
 def _fill_questions(ratio):
+    print("Generating questions...")
     for _ in range(ratio):
         txt = Text(Locale.EN)
         random_user = User.objects.order_by('?').first()
@@ -79,6 +82,7 @@ def _fill_questions(ratio):
 
 
 def _fill_answers(ratio):
+    print("Generating answers...")
     for _ in range(ratio):
         txt = Text(Locale.EN)
 
@@ -90,6 +94,7 @@ def _fill_answers(ratio):
 
 
 def _fill_likes(ratio):
+    print("Generating likes...")
     for _ in range(ratio):
         users = list(User.objects.all())
         questions = list(Question.objects.all())
