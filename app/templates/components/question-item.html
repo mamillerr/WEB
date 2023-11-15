@@ -7,9 +7,15 @@
     <div class="col-10">
         <div class="d-flex flex-column justify-content-start align-items-start">
             <a class="link-offset-2 fs-3" href="{% url 'question' question.id %}">{{question.title}}</a>
-            <p class="fs-5 text-secondary text-break">
-                {{question.description}}
-            </p>
+            {% if '/question/' in request.get_full_path %}
+                <p class="fs-5 text-secondary text-break">
+                    {{question.content}}
+                </p>
+            {% else %}
+                <p class="fs-5 text-secondary text-break">
+                    {{question.content|slice:":300"}}...
+                </p>
+            {% endif %}
         </div>
     </div>
 </div>

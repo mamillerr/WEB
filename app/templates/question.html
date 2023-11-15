@@ -41,33 +41,48 @@
             <!-- Pagination for iterating all answers -->
             <nav>
                 <ul class="pagination justify-content-start my-4">
-                    {% if answers.has_previous %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ answers.previous_page_number }}">Previous</a>
-                        </li>
-                    {% else %}
-                        <li class="page-item disabled">
-                            <a class="page-link" aria-disabled="true">Previous</a>
-                        </li>
-                    {% endif %}
+                  {% if answers.has_previous %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ answers.previous_page_number }}">Previous</a>
+                    </li>
+                  {% else %}
+                    <li class="page-item disabled">
+                      <a class="page-link" aria-disabled="true">Previous</a>
+                    </li>
+                  {% endif %}
 
-                    {% for i in answers.paginator.page_range %}
-                        {% if answers.number == i %}
-                            <li class="page-item active"><a class="page-link">{{i}}</a></li>
-                        {% else %}
-                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{i}}</a></li>
-                        {% endif %}
-                    {% endfor %}
+                  {% if answers.number|add:'-3' > 1 %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ answers.number|add:'-2' }}">&hellip;</a>
+                    </li>
+                  {% endif %}
 
-                    {% if answers.has_next %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ answers.next_page_number }}">Next</a>
-                        </li>
-                    {% else %}
-                        <li class="page-item disabled">
-                            <a class="page-link" aria-disabled="true">Next</a>
-                        </li>
+                  {% for i in answers.paginator.page_range %}
+                    {% if answeres.number == i %}
+                      <li class="page-item active"><a class="page-link">{{i}}</a></li>
+                    {% elif i > answers.number|add:'-3' and i < answers.number|add:'3' %}
+                      <li class="page-item"><a class="page-link" href="?page={{ i }}">{{i}}</a></li>
                     {% endif %}
+                  {% endfor %}
+
+                  {% if answers.paginator.num_pages > answers.number|add:'3' %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ answers.number|add:'3' }}">&hellip;</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ answers.paginator.num_pages }}">{{ answers.paginator.num_pages }}</a>
+                    </li>
+                  {% endif %}
+
+                  {% if answers.has_next %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ answers.next_page_number }}">Next</a>
+                    </li>
+                  {% else %}
+                    <li class="page-item disabled">
+                      <a class="page-link" aria-disabled="true">Next</a>
+                    </li>
+                  {% endif %}
                 </ul>
             </nav>
             <!-- End of pagination -->

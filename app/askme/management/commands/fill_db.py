@@ -28,7 +28,7 @@ class Command(BaseCommand):
         _fill_tags(ratio)
         _fill_questions(ratio * 10)
         _fill_answers(ratio * 100)
-        _fill_likes(ratio * 500)
+        _fill_likes(ratio * 300)
 
 
 def _fill_users(ratio):
