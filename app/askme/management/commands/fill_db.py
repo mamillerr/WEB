@@ -21,80 +21,99 @@ class Command(BaseCommand):
         for m in models:
             m.objects.all().delete()
 
+
         ratio = kwargs['ratio']
 
         _fill_users(ratio)
         _fill_tags(ratio)
         _fill_questions(ratio * 10)
         _fill_answers(ratio * 100)
-        _fill_likes(ratio * 200)
+        _fill_likes(ratio * 500)
 
 
 def _fill_users(ratio):
-    print("Generating users...")
+    print('Creating users...')
+    users = []
     for _ in range(ratio):
         person = Person(Locale.EN)
 
-        try:
-            u = User(first_name=person.first_name(),
-                     last_name=person.last_name(),
-                     email=person.email(),
-                     password=person.password(),
-                     is_staff=False,
-                     username=person.username(),
-                     )
+        u = User(first_name=person.first_name(),
+                 last_name=person.last_name(),
+                 email=person.email(),
+                 password=person.password(),
+                 is_staff=False,
+                 username=person.username(),
+                 )
 
-            u.save()
+        users.append(u)
 
-            p = Profile(user=u)
-            p.save()
-        except IntegrityError:
-            continue
+    User.objects.bulk_create(users, ignore_conflicts=True)
+
+    persisted_users = User.objects.all()
+    profiles = []
+    for user in persisted_users:
+        profiles.append(Profile(user=user))
+    Profile.objects.bulk_create(profiles, ignore_conflicts=True)
 
 
 def _fill_tags(ratio):
-    print("Generating tags...")
+    print('Creating tags...')
+    tags = []
     for _ in range(ratio):
         txt = Text(Locale.EN)
-        try:
-            t = Tag(name=txt.word())
-            t.save()
-        except IntegrityError:
-            continue
+
+        t = Tag(name=txt.word())
+        tags.append(t)
+    Tag.objects.bulk_create(tags, ignore_conflicts=True)
 
 
 def _fill_questions(ratio):
-    print("Generating questions...")
-    for _ in range(ratio):
+    print('Creating questions...')
+
+    users = list(User.objects.all())
+    random.shuffle(users)
+
+    questions = []
+    for i in range(ratio):
         txt = Text(Locale.EN)
-        random_user = User.objects.order_by('?').first()
 
         q = Question(title=txt.quote(),
-                     content=txt.text(5),
-                     user=random_user
+                     content=txt.text(30),
+                     user=users[i % (len(users) or 1)],
                      )
 
-        q.save()
+        questions.append(q)
 
-        tags = Tag.objects.order_by('?')[:2]
-        q.tags.set(tags)
-        q.save()
+    Question.objects.bulk_create(questions, ignore_conflicts=True)
+
+    persisted_questions = Question.objects.all()
+
+    all_tags = Tag.objects.all()
+    for i in range(ratio):
+        persisted_questions[i].tags.set(random.sample(list(all_tags), random.randint(0, 5)))
+        persisted_questions[i].save()
 
 
 def _fill_answers(ratio):
-    print("Generating answers...")
-    for _ in range(ratio):
-        txt = Text(Locale.EN)
+    print('Creating answers...')
 
-        random_user = User.objects.order_by('?').first()
-        random_question = Question.objects.order_by('?').first()
+    users = list(User.objects.all())
+    random.shuffle(users)
+    questions = list(Question.objects.all())
+    random.shuffle(questions)
 
-        a = Answer(content=txt.text(5), user=random_user, question=random_question, is_correct=False)
-        a.save()
+    n = 10
+    for j in range(n):
+        print(f'Creating answers #{j+1}...')
+        answers = []
+        for i in range(ratio // n):
+            txt = Text(Locale.EN)
+            a = Answer(content=txt.text(30), user=users[i % (len(users) or 1)], question=questions[i % (len(questions) or 1)], is_correct=False)
+            answers.append(a)
+        Answer.objects.bulk_create(answers, ignore_conflicts=True)
 
 
 def _fill_likes(ratio):
-    print("Generating likes...")
     for _ in range(ratio):
         users = list(User.objects.all())
         questions = list(Question.objects.all())
